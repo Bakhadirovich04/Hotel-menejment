@@ -39,7 +39,7 @@ public class BorrowService {
             return;
         }
 
-        // Списываем средства у пользователя
+
         user.setBalance(user.getBalance() - cost);
         borrow.setUser(user);
         borrowList.add(borrow);
