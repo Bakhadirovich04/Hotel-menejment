@@ -4,6 +4,7 @@ import org.example.entity.Room;
 import org.example.entity.enums.RoomState;
 import org.example.entity.enums.RoomType;
 
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -52,6 +53,15 @@ public class RoomService {
     }
 
     private static void editRoomState() {
+        System.out.println("enter the room number to change state");
+        String number = strScanner.nextLine();
+        Room roomToEdit = findRoom(number);
+
+        if (roomToEdit == null) {
+            System.out.println("This room wasn't built yet");
+            return;
+        }
+
         System.out.println("""
                 
                 1: Available
@@ -60,22 +70,32 @@ public class RoomService {
                 
                 Choose!
                 """);
+
         int choice = intScanner.nextInt();
+        intScanner.nextLine();
         switch (choice) {
-            case 1 -> {
-                room.setState(RoomState.AVAILABLE);
-            }
-            case 2 -> {
-                room.setState(RoomState.OCCUPIED);
-            }
-            case 3 -> {
-                room.setState(RoomState.CLEAN);
-            }
+            case 1 -> room.setState(RoomState.AVAILABLE);
+            case 2 -> room.setState(RoomState.OCCUPIED);
+            case 3 -> room.setState(RoomState.CLEAN);
             default -> System.out.println("invalid choice");
         }
     }
 
+    private static Room findRoom(String number) {
+        for (Room r : rooms) {
+            if (Objects.equals(r.getRoomNumber(), number)) {
+                return r;
+            }
+        }
+        return null;
+    }
+
     private static void getAllRoom() {
+        if (rooms.isEmpty()) {
+            System.out.println("No rooms available.");
+            return;
+        }
+
         int i = 1;
         for (Room r : rooms) {
             System.out.println(i++ + ": " + r);
@@ -83,57 +103,65 @@ public class RoomService {
     }
 
     private static void deleteRoom() {
-        System.out.println("enter roomNumber");
-        int choice = intScanner.nextInt();
+        System.out.println("enter room number to delete");
+        String choice = strScanner.nextLine();
+        Iterator<Room> iterator = rooms.iterator();
         boolean has = false;
-        for (Room r : rooms) {
+
+        while (iterator.hasNext()) {
+            Room r = iterator.next();
             if (Objects.equals(r.getRoomNumber(), choice)) {
-                rooms.remove(r);
+                iterator.remove();
                 has = true;
+                break;
             }
         }
+
         if (!has) {
-            System.out.println("invalid choice");
-            return;
+            System.out.println("invalid choice, room not found");
         }
         System.out.println("room successfully removed");
     }
 
     private static void editRoom() {
-        System.out.println("enter number of room to change");
-        Integer number = intScanner.nextInt();
+        System.out.println("Enter the number of the room you want to change:");
+        String number = strScanner.nextLine();
+        Room roomToEdit = findRoom(number);
 
-        for (Room r : rooms) {
-            if (Objects.equals(r.getRoomNumber(), number)) {
-                System.out.println("this number is not empty, choose another one");
-                break;
-            }
+        if (roomToEdit == null) {
+            System.out.println("This room wasn't built yet");
+            return;
         }
-        room.setRoomNumber(String.valueOf(number));
 
-        System.out.println("enter price of room to change");
-        room.setPrice(doubleScanner.nextDouble());
-
-        System.out.println("enter capacity of room to change");
-        room.setCapacity(intScanner.nextInt());
-
-        System.out.println("room successfully changed");
+        System.out.println("Enter the new price of the room:");
+        if (doubleScanner.hasNextDouble()) {
+            roomToEdit.setPrice(doubleScanner.nextDouble());
+            doubleScanner.nextLine();
+            System.out.println("Price of the room successfully changed.");
+        } else {
+            System.out.println("Invalid price input.");
+            doubleScanner.nextLine();
+        }
     }
+
 
     private static void addRoom() {
         room.setId(UUID.randomUUID().toString());
         System.out.println("enter room number");
         String number = strScanner.nextLine();
-        for (Room r : rooms) {
-            if (Objects.equals(r.getRoomNumber(), number)) {
-                System.out.println("this room is not empty, choose another room");
-                break;
-            }
+
+        if (findRoom(number) != null) {
+            System.out.println("This room is already taken, choose another room.");
+            return;
         }
         room.setRoomNumber(number);
 
         System.out.println("enter price of room");
         Double price = doubleScanner.nextDouble();
+        if (price <= 0) {
+            System.out.println("price cannot be 0 or less than");
+            return;
+        }
         room.setPrice(price);
 
         System.out.println("enter capacity of this room");
@@ -166,7 +194,10 @@ public class RoomService {
             case 3 -> {
                 room.setRoomType(RoomType.LUX);
             }
-            default -> System.out.println("invalid choice");
+            default -> {
+                System.out.println("invalid choice");
+                return;
+            }
         }
         rooms.add(room);
         System.out.println("room successfully added");
