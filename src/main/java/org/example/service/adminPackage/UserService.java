@@ -82,6 +82,10 @@ public class UserService {
     }
 
     private static void showAllUsers() {
-        users.forEach(System.out::println);
+        for (User user : users) {
+            if(!user.getRole().equals(Role.ADMIN)){
+                System.out.println(user);
+            }
+        }
     }
 }
