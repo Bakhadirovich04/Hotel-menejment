@@ -1,6 +1,7 @@
 package org.example.db;
 
 import com.github.javafaker.Faker;
+import lombok.Data;
 import org.example.entity.Borrow;
 import org.example.entity.History;
 import org.example.entity.Room;
@@ -10,12 +11,22 @@ import org.example.entity.enums.Role;
 import org.example.entity.enums.RoomState;
 import org.example.entity.enums.RoomType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
-
+import java.util.*;
+@Data
 public class Datasource {
+
+    public static void refreshScanner(){
+        intScanner =new Scanner(System.in);
+        strScanner =new Scanner(System.in);
+        doubleScanner =new Scanner(System.in);
+    }
+
+    public static User currentUser;
+
+    public static Scanner intScanner = new Scanner(System.in);
+    public static Scanner strScanner = new Scanner(System.in);
+    public static Scanner doubleScanner = new Scanner(System.in);
+
     private static final Faker faker = new Faker();
     private static final Random random = new Random();
 
@@ -51,7 +62,7 @@ public class Datasource {
             Room room = new Room();
             room.setId(UUID.randomUUID().toString());
             room.setRoomNumber("R" + (i + 1) + faker.number().digits(2));
-            room.setPrice((double) (random.nextInt() * 500 + 50));
+            room.setPrice(50 + random.nextDouble() * 500);
             room.setCapacity(random.nextInt(4) + 1);
             room.setFloor(random.nextInt(10) + 1);
             room.setState(RoomState.values()[random.nextInt(RoomState.values().length)]);

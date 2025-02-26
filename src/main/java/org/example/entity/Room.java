@@ -8,6 +8,7 @@ import org.example.entity.enums.RoomType;
 @NoArgsConstructor
 @Getter
 @Setter
+
 public class Room {
     private String id;
     private String roomNumber;
