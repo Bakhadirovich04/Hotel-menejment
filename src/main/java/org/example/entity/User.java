@@ -9,6 +9,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
+
 public class User {
     private String id = UUID.randomUUID().toString();
     private String name;
@@ -18,6 +19,5 @@ public class User {
     private String phoneNumber;
     private String fullAddress;
     private Role role;
-
     private Double balance;
 }
