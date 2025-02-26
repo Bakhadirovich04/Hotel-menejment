@@ -10,12 +10,21 @@ import org.example.entity.enums.Role;
 import org.example.entity.enums.RoomState;
 import org.example.entity.enums.RoomType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class Datasource {
+    public static void refreshScanner() {
+        intScanner = new Scanner(System.in);
+        strScanner = new Scanner(System.in);
+        doubleScanner = new Scanner(System.in);
+    }
+
+    public static User currentUser;
+
+    public static Scanner intScanner = new Scanner(System.in);
+    public static Scanner strScanner = new Scanner(System.in);
+    public static Scanner doubleScanner = new Scanner(System.in);
+
     private static final Faker faker = new Faker();
     private static final Random random = new Random();
 

@@ -9,7 +9,10 @@ import java.util.Objects;
 import java.util.UUID;
 
 import static org.example.db.Datasource.*;
+import static org.example.service.adminPackage.AdminService.intScanner;
+import static org.example.service.adminPackage.AdminService.strScanner;
 import static org.example.service.adminPackage.UserService.*;
+import static org.example.service.adminPackage.UserService.doubleScanner;
 
 public class RoomService {
     static Room room = new Room();

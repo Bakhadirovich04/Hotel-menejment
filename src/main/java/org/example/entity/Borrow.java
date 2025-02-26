@@ -7,6 +7,7 @@ import org.example.entity.enums.BorrowType;
 @NoArgsConstructor
 @Getter
 @Setter
+
 public class Borrow {
     private String id;
     private User user;
