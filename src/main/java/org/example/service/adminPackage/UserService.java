@@ -12,8 +12,10 @@ import static org.example.db.Datasource.users;
 public class UserService {
     static Scanner intScanner = new Scanner(System.in);
     static Scanner strScanner = new Scanner(System.in);
+    static Scanner doubleScanner = new Scanner(System.in);
+
     public static void userService() {
-        while (true){
+        while (true) {
             System.out.println("""
                     
                     0: Back
@@ -24,7 +26,7 @@ public class UserService {
                     Choose!
                     """);
             int choice = intScanner.nextInt();
-            switch (choice){
+            switch (choice) {
                 case 0 -> {
                     return;
                 }
