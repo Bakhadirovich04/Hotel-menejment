@@ -1,7 +1,6 @@
 package org.example.db;
 
 import com.github.javafaker.Faker;
-import lombok.Data;
 import org.example.entity.Borrow;
 import org.example.entity.History;
 import org.example.entity.Room;
@@ -12,13 +11,12 @@ import org.example.entity.enums.RoomState;
 import org.example.entity.enums.RoomType;
 
 import java.util.*;
-@Data
-public class Datasource {
 
-    public static void refreshScanner(){
-        intScanner =new Scanner(System.in);
-        strScanner =new Scanner(System.in);
-        doubleScanner =new Scanner(System.in);
+public class Datasource {
+    public static void refreshScanner() {
+        intScanner = new Scanner(System.in);
+        strScanner = new Scanner(System.in);
+        doubleScanner = new Scanner(System.in);
     }
 
     public static User currentUser;
@@ -62,7 +60,7 @@ public class Datasource {
             Room room = new Room();
             room.setId(UUID.randomUUID().toString());
             room.setRoomNumber("R" + (i + 1) + faker.number().digits(2));
-            room.setPrice(50 + random.nextDouble() * 500);
+            room.setPrice((double) (random.nextInt() * 500 + 50));
             room.setCapacity(random.nextInt(4) + 1);
             room.setFloor(random.nextInt(10) + 1);
             room.setState(RoomState.values()[random.nextInt(RoomState.values().length)]);
